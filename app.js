@@ -1,23 +1,53 @@
 let arr = ['🪨', '📃', '✂️', '🪨', '📃', '✂️', '📃', '✂️', '🪨']
 let outletUser = document.querySelector(".displayPlayer")
 let outletComp = document.querySelector(".displayComputer")
+const section = document.querySelector("section")
+let player
+let computer
 let rock = document.querySelector(".rock")
+let result = document.querySelector(".result")
 let paper = document.querySelector(".paper")
 let scissors = document.querySelector(".scissors")
-let result = document.querySelector(".result")
+let playerResult = document.querySelector(".playerResult")
+let computerResult = document.querySelector(".computerResult")
 let rand = 0
 let win = new Audio('win.wav')
 let lose = new Audio('lose.wav')
+let playerScore = 0
+let computerScore = 0
 
+function reset() {
+    location.reload()
+}
+function createResetBtn() {
 
-
+    scissors.removeEventListener("click", showScissors)
+    rock.removeEventListener("click", rockShow)
+    paper.removeEventListener("click", showPaper)
+    btn = document.createElement("button")
+    btn.className = "resetting"
+    btn.textContent = "reset"
+    section.appendChild(btn)
+    btn.addEventListener("click", reset)
+}
 function winning() {
-    result.textContent = "YOU WIN 🥳"
-    win.play()
+    playerScore++
+    playerResult.textContent = playerScore
+    if (playerScore === 5) {
+        result.innerHTML = "You WIN 🥳"
+        createResetBtn()
+
+    } win.play()
 }
 
 function losing() {
-    result.textContent = "YOU LOST 😞"
+    computerScore++
+    computerResult.textContent = computerScore
+    if (computerScore === 5) {
+        result.innerHTML = "computer win 🖥️"
+
+        createResetBtn()
+    }
     lose.play()
 }
 
@@ -27,7 +57,6 @@ function rockShow() {
     outletUser.textContent = "🪨"
     switch (outletComp.textContent) {
         case '🪨':
-            result.textContent = "ITS a DRAW 🪙"
             break;
         case '📃':
             losing()
@@ -47,7 +76,6 @@ function showPaper() {
             winning()
             break;
         case '📃':
-            result.textContent = "ITS a DRAW 🪙"
             break;
         case '✂️':
             losing()
@@ -67,7 +95,6 @@ function showScissors() {
             winning()
             break;
         case '✂️':
-            result.textContent = "ITS a DRAW 🪙"
             break;
     }
 }
